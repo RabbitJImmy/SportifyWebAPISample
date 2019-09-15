@@ -57,8 +57,8 @@ namespace SportifyPod.Controllers
 
                 if (token == null || token.IsExpired())
                 {
-                    Response.Redirect(authUrl);
-                    //Response.Write("<script type='text/javascript'>window.open('" + authUrl + "');</script>");
+                    //Response.Redirect(authUrl);
+                    Response.Write("<script type='text/javascript'>window.open('" + authUrl + "', '_blank'');</script>");
                 }
                 if (api == null)
                 api = new SpotifyWebAPI
