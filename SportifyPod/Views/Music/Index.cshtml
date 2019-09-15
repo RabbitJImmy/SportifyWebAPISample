@@ -1,0 +1,22 @@
+﻿
+@model SpotifyAPI.Web.Models.PrivateProfile
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome</h2>
+@Html.LabelFor(p=>p.DisplayName)
+@Html.DisplayFor(p=> p.DisplayName)
+<br />
+@Html.LabelFor(p=>p.Country)
+@Html.DisplayFor(p=>p.Country)
+<br />
+@Html.LabelFor(p=>p.Email)
+@Html.DisplayFor(p=>p.Email)
+
+<br />
+@Html.DisplayFor(p=>p.Id)
+<br />
+@Html.ActionLink("My Recommendation", "MusicRecom")

@@ -1,0 +1,26 @@
+﻿@using SpotifyAPI.Web.Models
+@using SportifyPod.Controllers
+
+@model List<SimpleTrack>
+
+<br />
+<div class="container">
+    @foreach (SimpleTrack track in Model)
+    {
+        <div class="row">
+            <div class="col-xs-6 col-md-7 text-left">
+                <a href="@track.PreviewUrl">
+                    <span class="glyphicon glyphicon-music " aria-hidden="true"></span>  @Html.DisplayFor(modelItem => track.Name)
+                    </a>
+</div>
+            <div class="col-xs-6 col-md-3">@Html.DisplayFor(modelItem => track.ArtistsName)</div>
+            <div class="col-xs-6 col-md-1">@Html.Raw(track.DurationText)</div>
+        </div>
+    }
+    </div>
+
+
+
+
+
+

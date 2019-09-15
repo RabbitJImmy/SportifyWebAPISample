@@ -1,0 +1,90 @@
+﻿
+@using SpotifyAPI.Web.Models
+@model IEnumerable<SimpleTrack>
+@{
+    ViewBag.Title = "MusicRecom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MusicRecom</h2>
+
+New Release Albums here:<br />
+
+Album:  @Html.DropDownList("NewRelease", null, htmlAttributes: new { @id = "ddlNewRelease", @onchange = "UpdateTrackList()", @class = "form-control" })
+@*@Html.DropDownList("Tracks", null, htmlAttributes: new { @id = "ddlTracks", @onchange = "updateContentList()", @class = "form-control" })*@
+Tracks: <select class="form-control" id="ddlTracks"></select>
+
+My Top Artists List:
+@Html.DropDownList("TopArtist", null, htmlAttributes: new { @id = "ddlTopArtist", @onchange = "updateContentList()", @class = "form-control"})
+
+
+@*@Html.DropDownList("Artist", null, htmlAttributes: new { @id = "ddlArtist", @onchange = "updateContentList()", @class = "form-control" })*@
+
+<a class="btn btn-default glyphicon glyphicon-search" href="javascript:updateContentList();"></a>
+
+<div id="dvCategoryResults" class="row">
+    @{Html.RenderPartial("RecommendationList", Model);}
+</div>
+
+<script type="text/javascript">
+
+    function updateContentList()
+    {
+        //var categoryId = $("#ddlNewRelease").val();
+        //var artistId = $('#ddlArtist').val();
+        var artistId = $('#ddlTopArtist').val();
+        var trackId = $('#ddlTracks').val();
+        $("#dvCategoryResults").load('@(Url.Action("GetRecommendationList", "Music",null, Request.Url.Scheme))?trackSeedId=' + trackId + '&artistSeedId=' + artistId);
+
+    }
+
+    function UpdateTrackList() {
+        var _albumId = $('#ddlNewRelease').val();
+        var url = "/Music/GetTracks";
+        $.ajax({
+            url: url,
+            data: { albumId: _albumId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Tracks</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                }
+                $("#ddlTracks").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+        
+    }
+
+    function GetTrackList() {
+        //var procemessage = "<option value='0'> Please wait...</option>";
+        //$("#ddlcity").html(procemessage).show();
+        var _albumId = $('#ddlNewRelease').val();
+        var url = "/Music/GetTracks";
+
+        $.ajax({
+            url: url,
+            data: { albumId: _albumId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Tracks</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlTracks").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+
+</script>
+
+
