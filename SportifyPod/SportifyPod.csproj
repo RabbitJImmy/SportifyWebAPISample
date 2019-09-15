@@ -192,6 +192,7 @@
     <Content Include="Views\Music\MusicRecom.cshtml" />
     <Content Include="Views\Music\RecommendationList.cshtml" />
     <Content Include="Views\Music\Index.cshtml" />
+    <Content Include="Views\Music\CallBack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,4 @@
-﻿using CodingAssignment.Spotify.ApiClient;
-using CodingAssignment.Spotify.ApiClient.Models;
-using SpotifyAPI.Web;
+﻿using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
 using System;
@@ -168,6 +166,49 @@ namespace SportifyPod.Controllers
         }
 
 
+
+        public ActionResult CallBack()
+        {
+
+            Token token;
+            string error = Request.QueryString["error"];
+            if (error == null)
+            {
+                string accessToken = Request.QueryString["access_token"];
+                string tokenType = Request.QueryString["token_type"];
+                string expiresIn = Request.QueryString["expires_in"];
+                if (tokenType != null)
+                {
+
+                    token = new Token
+                    {
+                        AccessToken = accessToken,
+                        ExpiresIn = double.Parse(expiresIn),
+                        TokenType = tokenType
+                    };
+
+                    SaveTokenFile(token);
+
+                    Response.Redirect("~/Music/Index");
+
+                }
+            }
+            else
+            {
+                token = new Token
+                {
+                    Error = error
+                };
+            }
+            return View();
+        }
+
+        private void SaveTokenFile(Token token)
+        {
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(token);
+            System.IO.File.WriteAllText(Server.MapPath("/SportifyToken.json"), jsonString);
+            System.Threading.Thread.Sleep(1000);
+        }
 
         public string GetAuthUri(string clientId, string type, string redirectUri, string state, bool showDialog)
         {

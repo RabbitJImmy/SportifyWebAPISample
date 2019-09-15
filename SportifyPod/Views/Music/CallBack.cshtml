@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "CallBack";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CallBack</h2>
+
+<script type="text/javascript">
+                window.onload = function() {
+               if (document.URL.indexOf('#') > 0)
+                window.location.href = document.URL.replace('#', '?');
+             }
+</script>
+
+<div>
+    You are connecting with Spotify now, a moment please ...
+</div>
